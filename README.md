@@ -1,2 +1,14 @@
 # csci596_final_project
 Final Project for CSCI 596: GROMACS and Efficient Queries for Molecular Dynamics
+
+For this final project I initially set out to do something very ambitious: recreate the system described in the MD_DBMS paper (incl. in this repo) to make MD queries more efficient for analysis of simulation data and create a central repository for the sharing of trajectory data and analysis amongst researchers in this field. Although I wasn't able to complete the whole project, I learned a lot about databases and the power of indexes along the way, and I used this project as a chance to gain exposure to molecular dynamics in a different field -- chemistry. I wanted to learn how to simulate proteins using the GROMACS software and leverage my knowledge of parallel computing to speed up my simulations. 
+
+Included in this repository are some intermediate files that contain the trajectories and other relevant info about the system I wanted to simulate: Lysozome in Water. One of the main outputs of the simulation is a .xtc file, which contains the trajectory of every atom from every residue within the protein. I've included those files here for anyone who wishes to look at them and play around with them as they wish. My first goal in this project was to understand how to use GROMACS (albeit, even if I'm just at a beginner's level currently) and to learn something new about the physics of a biological/chemical system. This was influenced by my interest in biochemistry (fun fact: I was a biochemistry major when I entered USC!). 
+
+My second goal was to at least complete part of the data loading module mentioned in the paper. The idea is to take the trajectory data that is stored in a flat file as an output of the GROMACS simulation into an RDBMS to store data more efficiently and leverage them to make analysis easier for researchers. Performing analysis (e.g. calculating spatial distance histogram) from a flat file is inefficient and can be time consuming and I/O-intensive for simulations with a large number of atoms. By migrating the data to an RDBMS, queries can return faster and there is less redundancy in the data. 
+
+Assuming that you have spun up a PostgreSQL server, if you follow the code in uploadData.ipynb you should be able to turn the flat file trajectory data into a relational model with two tables: an Atoms table (static info) and a trajectory table (the coordinates, frame, other dynamic quantities). 
+
+The data in the .xtc file is of a 1 ns simulation of Lysozome in Water, and that simulation as a movie from VMD can be viewed from the LysozomeMovieQT.mov file included in this repository. 
+
+I hope that I can continue working on this in the following semester and build some of the special indexes mentioned in the paper I took inspiration from so I can perform a comparison of the speedup doing analysis in this method vs the status quo.
